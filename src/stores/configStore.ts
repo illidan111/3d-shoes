@@ -18,6 +18,8 @@ export const EDIT_GROUP_WINDOW_MS = 400
 interface EditGroup {
   part: PartId
   at: number
+  /** Keep a capacity eviction until the group is known to contain a real change. */
+  discardedHistory?: ShoeConfig
 }
 
 export interface ConfigState {
@@ -89,13 +91,29 @@ export const useConfigStore = create<ConfigState>((set) => ({
         elapsed <= EDIT_GROUP_WINDOW_MS &&
         state.future.length === 0 &&
         state.past.length > 0
+      const config = { ...state.config, [id]: next }
+      const groupStart = grouped ? state.past.at(-1) : undefined
+      const discardedHistory = grouped
+        ? state.editGroup?.discardedHistory
+        : state.past.length >= HISTORY_LIMIT
+          ? state.past[0]
+          : undefined
+      // A quick experiment that returns to its starting point is not an undo step.
+      const revertedGroup = groupStart !== undefined && configsEqual(config, groupStart)
+      const retainedHistory = revertedGroup ? state.past.slice(0, -1) : state.past
       return {
         ...exitComparison,
         // Editing visible A creates a new B. The old B remains in past from entry.
-        config: { ...state.config, [id]: next },
-        past: grouped ? state.past : appendHistory(state.past, state.config),
+        config,
+        past: revertedGroup
+          ? discardedHistory
+            ? [discardedHistory, ...retainedHistory]
+            : retainedHistory
+          : grouped
+            ? state.past
+            : appendHistory(state.past, state.config),
         future: [],
-        editGroup: { part: id, at },
+        editGroup: revertedGroup ? null : { part: id, at, discardedHistory },
       }
     })
   },
