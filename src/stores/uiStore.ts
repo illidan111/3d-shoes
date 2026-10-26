@@ -56,7 +56,9 @@ export const useUiStore = create<UiState>((set) => ({
   screenshotRequested: 0,
   requestScreenshot: () =>
     set((state) =>
-      state.screenshotBusy ? state : { screenshotRequested: state.screenshotRequested + 1 },
+      state.screenshotBusy || !state.sceneReady
+        ? state
+        : { screenshotRequested: state.screenshotRequested + 1 },
     ),
   screenshotSize: 'viewport',
   setScreenshotSize: (size) => {
@@ -66,7 +68,12 @@ export const useUiStore = create<UiState>((set) => ({
   setScreenshotBusy: (busy) => set({ screenshotBusy: busy }),
   sceneReady: false,
   setSceneReady: (ready) => {
-    if (typeof ready === 'boolean') set({ sceneReady: ready })
+    if (typeof ready === 'boolean')
+      set(
+        ready
+          ? { sceneReady: true }
+          : { sceneReady: false, hoveredPart: null, screenshotBusy: false },
+      )
   },
   notice: '',
   noticeRevision: 0,
