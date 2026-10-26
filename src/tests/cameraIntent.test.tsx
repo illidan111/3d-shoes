@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react'
+import { act, cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { PerspectiveCamera, Scene } from 'three'
@@ -87,5 +87,34 @@ describe('camera intent while a model is loading', () => {
     studio.rerender(<Studio loaded />)
     expect(useUiStore.getState().cameraView).toBe('top')
     expect(camera.position.y).toBeGreaterThan(3)
+  })
+})
+
+describe('batched camera intent after the model has mounted', () => {
+  it('focuses the part when its selection follows a named view in one batch', () => {
+    render(<Studio loaded />)
+    act(() => {
+      useUiStore.getState().setCameraView('top')
+      // PartList records the focus intent before changing the selected part.
+      useUiStore.getState().clearCameraView()
+      useConfigStore.getState().selectPart('sole')
+    })
+    expect(useUiStore.getState().cameraView).toBeNull()
+    expect(useConfigStore.getState().selectedPart).toBe('sole')
+    expect(camera.position.y).toBeLessThan(1)
+    expect(camera.position.z).toBeGreaterThan(3)
+  })
+
+  it('uses the named view when it follows a part selection in one batch', () => {
+    render(<Studio loaded />)
+    act(() => {
+      useUiStore.getState().clearCameraView()
+      useConfigStore.getState().selectPart('sole')
+      useUiStore.getState().setCameraView('top')
+    })
+    expect(useUiStore.getState().cameraView).toBe('top')
+    expect(useConfigStore.getState().selectedPart).toBe('sole')
+    expect(camera.position.y).toBeGreaterThan(3)
+    expect(Math.abs(camera.position.z)).toBeLessThan(0.5)
   })
 })

@@ -37,11 +37,14 @@ export function CameraRig() {
     const partChanged = previousPart.current !== selectedPart
     previousRevision.current = viewRevision
     previousPart.current = selectedPart
+    const requestedView = useUiStore.getState().cameraView
     // On mount the store already holds the latest UI intent, including commands
     // issued before the GLB finished loading. Only later part changes override it.
     const focusPart = firstFrame
-      ? useUiStore.getState().cameraView === null
-      : partChanged && !viewRequested
+      ? requestedView === null
+      : partChanged && (!viewRequested || requestedView === null)
+    // A part chosen after a named view in the same batch clears requestedView;
+    // its focus still wins even though that earlier view changed the revision.
     if (focusPart) useUiStore.getState().clearCameraView()
     const viewId = useUiStore.getState().cameraView
 
