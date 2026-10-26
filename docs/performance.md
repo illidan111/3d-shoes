@@ -10,8 +10,8 @@
 | -------------------------------------- | ------------------------------ | --------------------------------------- | --------------------------------------- |
 | GLB bytes                              | 1 530 164                      | **1 539 904**                           | Размер файла и `gltf-transform inspect` |
 | GLB triangles                          | 61 236                         | **61 556**                              | Генератор / inspect                     |
-| Startup JS, raw/gzip                   | Не измерено                    | Не измерено                             | `npm run build`, Network                |
-| Scene chunk, raw/gzip                  | Не измерено                    | Не измерено                             | `npm run build`, Network                |
+| Startup JS, raw/gzip                   | Не измерено                    | **240,70 / 76,03 KB**                   | `npm run build`, Network                |
+| Scene chunk, raw/gzip                  | Не измерено                    | **1075,01 / 294,25 KB**                 | `npm run build`, Network                |
 | Calls / triangles на кадр              | Не измерено                    | **12 / 61 558**, локальный host         | `forma:metrics` и `renderer.info`       |
 | FPS median / p10, ноутбук              | Не измерено                    | Не измерено                             | 30 секунд фиксированного сценария       |
 | FPS median / p10, телефон              | Не измерено                    | Не измерено                             | Тот же сценарий на реальном устройстве  |
