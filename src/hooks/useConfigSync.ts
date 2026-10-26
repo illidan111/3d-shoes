@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { configsEqual } from '../config/parts'
 import { isEditableTarget } from '../lib/a11y'
 import { parseConfig, updateConfigUrl } from '../lib/urlState'
 import { useConfigStore } from '../stores/configStore'
@@ -17,7 +18,11 @@ export function useConfigSync(): void {
       if (state.config !== previous.config) updateConfigUrl(state.config)
     })
     const onPopState = () => {
-      useConfigStore.getState().loadConfig(parseConfig(window.location.search))
+      const nextConfig = parseConfig(window.location.search)
+      const state = useConfigStore.getState()
+      // Hash and campaign navigation must not discard editing history or saved A.
+      if (configsEqual(state.config, nextConfig)) return
+      state.loadConfig(nextConfig)
       useUiStore.getState().activateScene()
       useUiStore.getState().announce('Конфигурация восстановлена из ссылки')
     }
