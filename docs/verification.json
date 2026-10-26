@@ -1,0 +1,128 @@
+{
+  "note": "Single local runs, mobile CPU/network simulation. Final mobile default uses static preview and user-triggered WebGL. FPS measured in desktop headless Edge on this host, not a physical phone.",
+  "stages": {
+    "initial": {
+      "date": "2026-10-26T09:23:32.424Z",
+      "lighthouse": "13.5.0",
+      "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+      "mode": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "scores": {
+        "performance": 62,
+        "accessibility": 96,
+        "best-practices": 100,
+        "seo": 91
+      },
+      "metrics": {
+        "first-contentful-paint": 2200.49625,
+        "largest-contentful-paint": 2993.7955,
+        "total-blocking-time": 3906,
+        "cumulative-layout-shift": 0,
+        "speed-index": 2902.0456111993267
+      }
+    },
+    "shaderPreparation": {
+      "date": "2026-10-26T09:32:48.710Z",
+      "lighthouse": "13.5.0",
+      "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+      "mode": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "scores": {
+        "performance": 61,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2208.035,
+        "largest-contentful-paint": 3011.642,
+        "total-blocking-time": 4896.5,
+        "cumulative-layout-shift": 0.000345248892899375,
+        "speed-index": 3227.1018801447735
+      }
+    },
+    "mobilePreview": {
+      "date": "2026-10-26T09:39:17.034Z",
+      "lighthouse": "13.5.0",
+      "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+      "mode": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "scores": {
+        "performance": 95,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 1398.4223,
+        "largest-contentful-paint": 2901.1334500000003,
+        "total-blocking-time": 27,
+        "cumulative-layout-shift": 0,
+        "speed-index": 1398.4223
+      }
+    }
+  },
+  "browser": {
+    "checkedAt": "2026-10-26T09:39:50.344Z",
+    "browser": "156.0.4314.42",
+    "desktop": {
+      "width": 1505,
+      "height": 1045
+    },
+    "mobile": {
+      "viewport": 390,
+      "scroll": 390,
+      "panelTop": 618.03125,
+      "stageBottom": 622.03125
+    },
+    "metrics": [
+      "fps: 165 · calls: 12 · triangles: 61558 · geometries: 23 · textures: 6 · dpr: 1",
+      "fps: 165 · calls: 12 · triangles: 61558 · geometries: 23 · textures: 6 · dpr: 1",
+      "fps: 165 · calls: 12 · triangles: 61558 · geometries: 23 · textures: 6 · dpr: 1",
+      "fps: 165 · calls: 12 · triangles: 61558 · geometries: 23 · textures: 6 · dpr: 1",
+      "fps: 165 · calls: 12 · triangles: 61558 · geometries: 23 · textures: 6 · dpr: 1"
+    ],
+    "errors": [],
+    "checks": [
+      "PNG download filename + image",
+      "color + material URL",
+      "undo button",
+      "keyboard redo",
+      "URL opened in another tab",
+      "radio arrows and focus",
+      "help Escape",
+      "orbit drag/reset",
+      "invalid URL default",
+      "model load error then retry",
+      "mobile panel/no overflow/reduced motion",
+      "WebGL missing fallback + controls"
+    ]
+  },
+  "deployment": {
+    "url": "https://rushing-tundra-vr3u7th.tmp.now",
+    "temporary": true,
+    "expiresAt": "2026-10-26T10:43:07.617Z",
+    "httpStatus": 200
+  }
+}

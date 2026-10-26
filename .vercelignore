@@ -1,0 +1,6 @@
+docs/
+src/tests/
+.qa/
+.github/
+scripts/
+README.md

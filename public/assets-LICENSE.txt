@@ -1,0 +1,31 @@
+FORMA STUDIO — ASSET PROVENANCE
+Verified: 2026-10-26
+
+1. models/shoe.glb
+   Original unbranded procedural sneaker created for this project.
+   Source: scripts/generate-model.mjs in this repository.
+   No third-party model, brand logo, image texture or scanned geometry was used.
+   The model is reproducible using the project's installed Three.js dependency.
+   This file has no additional third-party asset-license requirements.
+   Three.js (the generation tool) is MIT licensed; see node_modules/three/LICENSE.
+
+2. environment/studio.hdr and environment/studio-512.hdr
+   Title: Studio Small 03
+   Author: Greg Zaal / Poly Haven
+   Asset page: https://polyhaven.com/a/studio_small_03
+   Download: https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/studio_small_03_1k.hdr
+   License: Creative Commons CC0 1.0 Universal (Public Domain Dedication)
+   License statement: https://polyhaven.com/license
+   Legal text: https://creativecommons.org/publicdomain/zero/1.0/legalcode
+   Desktop source: original 1024x512 HDR downloaded unchanged as studio.hdr.
+   Mobile modification: downsampled to 512x256 using a 2x2
+   box filter in linear floating-point radiance, then encoded as Radiance RGBE.
+   No exposure, tone mapping, gamma adjustment or highlight clipping applied.
+   Reproduction script: scripts/resize-hdri.mjs.
+   Both variants are served locally; the scene selects the appropriate size.
+
+The assets are served locally. The application does not fetch model decoders,
+textures or environment maps from a third-party CDN at runtime.
+
+The commonly shared pmndrs/drcmda floating-shoe sample was considered but is
+NOT included: its original repository does not clearly document an asset license.
