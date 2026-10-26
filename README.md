@@ -62,11 +62,10 @@ npm run preview
 ```
 
 ```sh
-npm run lint
-npm run format:check
-npm run typecheck
-npm test
+npm run check
 ```
+
+Команда последовательно проверяет ESLint, форматирование, тесты, TypeScript и production-сборку; при ошибке останавливается. Для отдельной проверки доступны `npm run lint`, `npm run format:check`, `npm run typecheck` и `npm test`.
 
 Набор тестов охватывает URL и гидратацию, историю, атомарное применение палитр, неизменяемость снимка A, переключение и редактирование A/B, ракурсы, размеры PNG и восстановление renderer после экспорта, клавиатуру, radio-группы, диалоги, Clipboard API и существующий отложенный запуск сцены. Результаты новых desktop-сценариев — в [отдельном протоколе](docs/desktop-features-verification.json). Старые 12 браузерных сценариев и мобильная проверка относятся к `45fecee`, а не к повторному аудиту этой версии. GitHub Actions повторяет проверки и сборку на PR и push в `main`/`master`; наличие workflow само по себе не означает, что удалённый запуск уже состоялся.
 
