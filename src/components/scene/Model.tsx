@@ -8,6 +8,7 @@ import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { useConfigStore } from '../../stores/configStore'
 import { useUiStore } from '../../stores/uiStore'
 import { attachHoverRim, type RimUniform } from '../../shaders/hoverRim'
+import { materialTransitionAlpha } from '../../lib/materialTransition'
 
 interface AnimatedMaterial {
   material: MeshStandardMaterial
@@ -103,7 +104,7 @@ export function Model() {
   useEffect(() => () => model.owned.forEach((material) => material.dispose()), [model])
 
   useFrame((_, delta) => {
-    const alpha = reducedMotion ? 1 : 1 - Math.exp(-Math.min(delta, 0.1) * 14)
+    const alpha = materialTransitionAlpha(delta, reducedMotion)
     const hovered = useUiStore.getState().hoveredPart
     for (const entry of model.animated) {
       entry.material.color.lerp(entry.color, alpha)
