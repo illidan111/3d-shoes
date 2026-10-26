@@ -586,6 +586,12 @@ button {
   background: #edf1ff;
   border-color: #3455db;
 }
+.desktop-feature {
+  display: none;
+}
+.camera-tools {
+  display: contents;
+}
 @media (min-width: 1500px) {
   .workspace {
     grid-template-columns: minmax(0, 1fr) 480px;
@@ -821,6 +827,357 @@ button {
     width: min(51px, 100%);
     height: auto;
     aspect-ratio: 1;
+  }
+}
+/* Desktop tools share the existing surfaces; the inspector scrolls independently
+   on shorter laptops so export controls never disappear below the page. */
+@media (min-width: 769px) {
+  .workspace {
+    height: calc(100svh - 78px);
+    min-height: 680px;
+  }
+  .stage {
+    min-height: 0;
+  }
+  .canvas-region {
+    top: 354px;
+    bottom: 200px;
+  }
+  .preset-section {
+    display: block;
+    position: absolute;
+    top: 274px;
+    left: 40px;
+    right: 40px;
+    z-index: 2;
+  }
+  .preset-section h2 {
+    margin: 0 0 10px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.25px;
+  }
+  .preset-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 7px;
+  }
+  .preset-button {
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 8px 16px;
+    border: 1px solid #d6d8d2;
+    border-radius: 6px;
+    background: #ffffffd9;
+    font-size: 13px;
+    line-height: 1.25;
+    text-align: left;
+  }
+  .preset-button:hover {
+    border-color: #8a9188;
+    background: #fff;
+  }
+  .preset-button[aria-pressed='true'] {
+    border-color: var(--color-accent);
+    background: #edf1ff;
+    color: #2945c0;
+  }
+  .preset-colors {
+    display: flex;
+    flex-shrink: 0;
+    gap: 4px;
+  }
+  .preset-colors > span {
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px #00000008;
+  }
+  .stage-bottom {
+    bottom: 24px;
+    right: 40px;
+    gap: 12px;
+  }
+  .comparison-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .comparison-controls button {
+    min-height: 39px;
+    padding: 8px 19px;
+    border: 1px solid #d6d8d2;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .comparison-controls .comparison-save {
+    border-color: #454745;
+  }
+  .comparison-controls button:hover:not(:disabled) {
+    background: #edf1ff;
+    border-color: var(--color-accent);
+  }
+  .comparison-controls button[aria-pressed='true'] {
+    border-color: var(--color-accent);
+    color: #2945c0;
+    background: #edf1ff;
+  }
+  .comparison-hint {
+    font-size: 11px;
+    color: #555953;
+    line-height: 1.4;
+  }
+  .camera-tools {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .camera-views {
+    display: flex;
+    padding: 3px;
+    gap: 2px;
+    background: #ffffffeb;
+    border: 1px solid #dedfdb;
+    border-radius: 7px;
+  }
+  .camera-views button {
+    min-height: 43px;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .camera-views button:hover {
+    background: #f1f3ed;
+  }
+  .camera-views button[aria-pressed='true'] {
+    color: #2945c0;
+    background: #edf1ff;
+    border-color: var(--color-accent);
+  }
+  .orbit-hint {
+    margin-top: 5px;
+  }
+  .announcement {
+    left: 40px;
+    bottom: 185px;
+    font-size: 11px;
+  }
+  .config-panel {
+    min-height: 0;
+  }
+  .panel-header,
+  .panel-actions,
+  .panel-signature {
+    flex-shrink: 0;
+  }
+  .panel-editor {
+    min-height: 0;
+    overflow: auto;
+    margin: 0 -8px 14px;
+    padding: 0 8px;
+    scrollbar-width: thin;
+    scrollbar-color: #c8cbc3 transparent;
+    overscroll-behavior: contain;
+  }
+  .part-list {
+    margin-top: 22px;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+  }
+  .part-row {
+    min-height: 60px;
+  }
+  .swatches {
+    row-gap: 12px;
+  }
+  .swatch {
+    width: 54px;
+    height: 54px;
+  }
+  .material-title {
+    margin-top: 18px;
+    margin-bottom: 12px;
+  }
+  .material-description {
+    min-height: 0;
+    margin: 10px 0 0;
+  }
+  .export-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .export-options button {
+    min-height: 39px;
+    padding: 8px;
+    border: 1px solid #d6d8d2;
+    border-radius: 6px;
+    font-size: 13px;
+    background: #fff;
+  }
+  .export-options button:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .export-options button:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: -1px;
+  }
+  .export-options button[aria-checked='true'] {
+    color: #2945c0;
+    background: #edf1ff;
+    border-color: var(--color-accent);
+    position: relative;
+  }
+  .help-dialog .desktop-feature {
+    display: block;
+  }
+}
+@media (min-width: 769px) and (max-height: 950px) {
+  .stage-heading {
+    padding-top: 28px;
+  }
+  .stage-heading h1 {
+    font-size: clamp(46px, 4.8vw, 64px);
+  }
+  .stage-heading p {
+    font-size: 20px;
+    margin-top: 18px;
+  }
+  .preset-section {
+    top: 220px;
+  }
+  .canvas-region {
+    top: 310px;
+  }
+  .config-panel {
+    padding-top: 26px;
+    padding-bottom: 20px;
+  }
+  .panel-header h2 {
+    font-size: 30px;
+  }
+  .panel-header p {
+    font-size: 12px;
+  }
+  .part-row {
+    min-height: 50px;
+  }
+  .part-list {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+  }
+  .swatch {
+    width: 45px;
+    height: 45px;
+  }
+  .option-heading h3,
+  .material-title {
+    font-size: 18px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1200px) {
+  .preset-section {
+    left: 28px;
+    right: 28px;
+  }
+  .preset-button {
+    flex-direction: column;
+    gap: 7px;
+    font-size: 11px;
+    text-align: center;
+  }
+  .preset-colors > span {
+    width: 15px;
+    height: 15px;
+  }
+  .stage-bottom {
+    left: 28px;
+    right: 28px;
+  }
+  .camera-views button {
+    padding: 7px 9px;
+    gap: 6px;
+    font-size: 11px;
+  }
+  .comparison-hint {
+    flex-basis: 100%;
+  }
+  .canvas-region {
+    top: 360px;
+    bottom: 260px;
+  }
+  .announcement {
+    bottom: 240px;
+    left: 28px;
+  }
+  .swatch {
+    width: 44px;
+    height: 44px;
+  }
+}
+@media (min-width: 769px) and (max-height: 820px) {
+  .stage-heading h1 {
+    font-size: 50px;
+  }
+  .preset-section {
+    top: 190px;
+  }
+  .canvas-region {
+    top: 280px;
+  }
+  .part-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    margin-top: 14px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+  }
+  .part-row {
+    min-height: 44px;
+    gap: 8px;
+    padding: 8px 10px;
+  }
+  .part-name {
+    font-size: 15px;
+  }
+  .part-color {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+  .part-number,
+  .part-row > svg,
+  .part-row::after {
+    display: none;
+  }
+  .option-heading {
+    margin-bottom: 12px;
+  }
+  .swatches {
+    row-gap: 10px;
+  }
+  .swatch {
+    width: 40px;
+    height: 40px;
+  }
+  .material-title {
+    margin-top: 12px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

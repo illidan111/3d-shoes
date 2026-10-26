@@ -137,3 +137,52 @@ describe('configuration history', () => {
     expect(state().future).toHaveLength(0)
   })
 })
+
+describe('atomic configuration changes', () => {
+  it('applies multiple parts as a single undoable step', () => {
+    const next = cloneConfig(DEFAULT_CONFIG)
+    next.body = { color: 'red', material: 'metallic' }
+    next.sole.color = 'black'
+    next.lace.material = 'glossy'
+    state().applyConfig(next)
+    expect(state().config).toEqual(next)
+    expect(state().past).toHaveLength(1)
+    expect(state().editGroup).toBeNull()
+    state().undo()
+    expect(state().config).toEqual(DEFAULT_CONFIG)
+    state().redo()
+    expect(state().config).toEqual(next)
+  })
+
+  it('detaches incoming configuration objects and discards redo after a real change', () => {
+    state().updatePart('body', { color: 'red' }, 1000)
+    state().undo()
+    const next = cloneConfig(DEFAULT_CONFIG)
+    next.sole.color = 'black'
+    state().applyConfig(next)
+    next.sole.color = 'olive'
+    expect(state().config.sole.color).toBe('black')
+    expect(state().future).toHaveLength(0)
+  })
+
+  it('ignores invalid configurations and keeps redo for equal configurations', () => {
+    state().updatePart('body', { color: 'red' }, 1000)
+    state().undo()
+    state().applyConfig(null)
+    state().applyConfig({ body: { color: 'red', material: 'matte' } })
+    state().applyConfig(DEFAULT_CONFIG)
+    expect(state().config).toEqual(DEFAULT_CONFIG)
+    expect(state().past).toHaveLength(0)
+    expect(state().future).toHaveLength(1)
+    expect(state().editGroup).toBeNull()
+  })
+
+  it('separates a preset action from subsequent quick edits', () => {
+    state().updatePart('body', { color: 'red' }, 1000)
+    state().applyConfig(state().config)
+    state().updatePart('body', { material: 'glossy' }, 1100)
+    expect(state().past).toHaveLength(2)
+    state().undo()
+    expect(state().config.body).toEqual({ color: 'red', material: 'matte' })
+  })
+})

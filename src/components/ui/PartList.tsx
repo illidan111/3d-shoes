@@ -24,6 +24,10 @@ export function PartList() {
           tabIndex={selectedPart === part.id ? 0 : -1}
           className="part-row"
           onClick={() => {
+            // Record intent even while the GLB is still loading. A later named
+            // view can then override this focus request without a mount race.
+            if (useConfigStore.getState().selectedPart !== part.id)
+              useUiStore.getState().clearCameraView()
             selectPart(part.id)
             useUiStore.getState().activateScene()
           }}

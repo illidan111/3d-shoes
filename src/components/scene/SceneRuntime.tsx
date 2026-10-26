@@ -61,10 +61,18 @@ export function SceneRuntime({ onContextLost }: SceneRuntimeProps) {
   useEffect(() => {
     if (request === handledRequest.current) return
     handledRequest.current = request
+    useUiStore.getState().setScreenshotBusy(true)
+    const exportSize = useUiStore.getState().screenshotSize
     let cancelled = false
     let frame = 0
     let latestConfig = useConfigStore.getState().config
     let stableSince = performance.now()
+    const lastPosition = camera.position.clone()
+    const lastRotation = camera.quaternion.clone()
+    const resetStability = () => {
+      stableSince = performance.now()
+    }
+    document.addEventListener('visibilitychange', resetStability)
 
     const captureWhenSettled = (now: number) => {
       if (cancelled) return
@@ -73,13 +81,21 @@ export function SceneRuntime({ onContextLost }: SceneRuntimeProps) {
         latestConfig = nextConfig
         stableSince = now
       }
+      if (
+        lastPosition.distanceToSquared(camera.position) > 1e-8 ||
+        lastRotation.angleTo(camera.quaternion) > 1e-5
+      ) {
+        lastPosition.copy(camera.position)
+        lastRotation.copy(camera.quaternion)
+        stableSince = now
+      }
       // Wait for the 300 ms material transition, including edits made directly
       // after the export click. No perpetual preserveDrawingBuffer allocation.
-      if (now - stableSince < 400) {
+      if (document.visibilityState !== 'visible' || now - stableSince < 400) {
         frame = requestAnimationFrame(captureWhenSettled)
         return
       }
-      void downloadScreenshot(gl, scene, camera, configurationKey(latestConfig))
+      void downloadScreenshot(gl, scene, camera, configurationKey(latestConfig), exportSize)
         .then(() => {
           if (!cancelled)
             useUiStore.getState().announce('PNG сохранён. Имя файла содержит ключ конфигурации.')
@@ -88,11 +104,16 @@ export function SceneRuntime({ onContextLost }: SceneRuntimeProps) {
           if (!cancelled)
             useUiStore.getState().announce('Не удалось сохранить PNG. Попробуйте ещё раз.')
         })
+        .finally(() => {
+          if (!cancelled) useUiStore.getState().setScreenshotBusy(false)
+        })
     }
     frame = requestAnimationFrame(captureWhenSettled)
     return () => {
       cancelled = true
       cancelAnimationFrame(frame)
+      document.removeEventListener('visibilitychange', resetStability)
+      useUiStore.getState().setScreenshotBusy(false)
     }
   }, [camera, gl, request, scene])
 

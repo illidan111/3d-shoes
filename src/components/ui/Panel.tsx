@@ -5,9 +5,11 @@ import { updateConfigUrl } from '../../lib/urlState'
 import { Icon } from './Icon'
 import { PartList } from './PartList'
 import { Swatches } from './Swatches'
+import { ExportOptions } from './ExportOptions'
 
 export function Panel() {
   const sceneReady = useUiStore((state) => state.sceneReady)
+  const screenshotBusy = useUiStore((state) => state.screenshotBusy)
   const requestScreenshot = useUiStore((state) => state.requestScreenshot)
   const announce = useUiStore((state) => state.announce)
   const shareDialog = useRef<HTMLDialogElement>(null)
@@ -32,19 +34,23 @@ export function Panel() {
         <h2 id="panel-title">Создай свою пару</h2>
         <p>FORM 01 / Персональная конфигурация</p>
       </div>
-      <PartList />
-      <Swatches />
+      <div className="panel-editor">
+        <PartList />
+        <Swatches />
+      </div>
       <div className="panel-actions">
+        <ExportOptions />
         <button type="button" className="primary-button" onClick={() => void share()}>
           Поделиться <Icon name="share" />
         </button>
         <button
           type="button"
           className="secondary-button"
-          disabled={!sceneReady}
+          disabled={!sceneReady || screenshotBusy}
+          aria-busy={screenshotBusy}
           onClick={requestScreenshot}
         >
-          Скачать PNG <Icon name="download" />
+          {screenshotBusy ? 'Сохраняем PNG…' : 'Скачать PNG'} <Icon name="download" />
         </button>
         <p className="panel-signature">Сделано тобой. В единственном экземпляре.</p>
       </div>

@@ -5,6 +5,9 @@ import { HelpDialog } from './components/ui/HelpDialog'
 import { Announcement } from './components/ui/Announcement'
 import { SceneViewport } from './components/ui/SceneViewport'
 import { PerformanceReadout } from './components/ui/PerformanceReadout'
+import { Presets } from './components/ui/Presets'
+import { ComparisonControls } from './components/ui/ComparisonControls'
+import { CameraViews } from './components/ui/CameraViews'
 
 export default function App() {
   useConfigSync()
@@ -35,11 +38,16 @@ export default function App() {
             </h1>
             <p>Один силуэт. Бесконечно твой.</p>
           </div>
+          <Presets />
           <div className="canvas-region">
             <SceneViewport />
           </div>
           <div className="stage-bottom">
-            <Toolbar />
+            <ComparisonControls />
+            <div className="camera-tools">
+              <Toolbar />
+              <CameraViews />
+            </div>
             <div className="orbit-hint">
               <svg
                 width="32"

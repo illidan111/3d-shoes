@@ -5,7 +5,7 @@ import hooks from 'eslint-plugin-react-hooks'
 import refresh from 'eslint-plugin-react-refresh'
 
 export default tseslint.config(
-  { ignores: ['dist/**', 'node_modules/**', '.qa/**', 'public/**'] },
+  { ignores: ['dist/**', 'node_modules/**', '.qa/**', '.vercel/**', 'public/**'] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
