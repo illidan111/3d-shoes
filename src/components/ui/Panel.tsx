@@ -31,7 +31,9 @@ export function Panel() {
   return (
     <aside className="config-panel" aria-labelledby="panel-title">
       <div className="panel-header">
-        <h2 id="panel-title">Создай свою пару</h2>
+        <h2 id="panel-title" tabIndex={-1}>
+          Создай свою пару
+        </h2>
         <p>FORM 01 / Персональная конфигурация</p>
       </div>
       <div className="panel-editor">
