@@ -32,6 +32,7 @@ export function useConfigSync(): void {
         event.altKey ||
         !(event.metaKey || event.ctrlKey) ||
         (event.code !== 'KeyZ' && event.key.toLowerCase() !== 'z') ||
+        (event.target instanceof Element && event.target.closest('dialog[open]') !== null) ||
         isEditableTarget(event.target)
       )
         return
